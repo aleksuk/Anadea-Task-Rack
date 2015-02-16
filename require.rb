@@ -1,0 +1,6 @@
+require_relative 'models/product'
+require_relative 'controllers/product'
+require_relative 'views/product'
+require_relative 'router'
+require_relative 'init'
+require_relative 'server'
