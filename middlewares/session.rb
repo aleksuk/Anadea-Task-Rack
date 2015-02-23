@@ -14,7 +14,6 @@ class Session < BaseServer
     token = request.cookies['token']
 
     Session.set_user @@session[token]
-    # response = @app.call env
 
     case request.path
     when '/logout'
