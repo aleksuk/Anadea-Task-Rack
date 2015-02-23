@@ -1,4 +1,9 @@
-require_relative 'require'
-#check at home
-#use Rack::Reloader, 0
-run MyApp.new
+require_relative 'dependency'
+
+use Rack::Reloader
+
+use Exeption
+use Content
+use Session
+
+run Shop.new

@@ -1,19 +1,8 @@
-class ProductView
-
-  @template =<<STR
-  <html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-       {{ content }}
-    </body>
-  </html>
-STR
+class ProductView < MainView
 
   def self.render_all_products products
     result = products.reduce '' do |sum, el|
-      sum << "<div><a href=\"/#{el.name}\">#{el.name}</a><span>: #{el.price}</span></div>"
+      sum << "<div><a href=\"/product/#{el.name}\">#{el.name}</a><span>: #{el.price}</span></div>"
     end
 
     render result
@@ -24,7 +13,7 @@ STR
   end
 
   def self.render content
-    @template.sub(/\{\{\ content }}/, content)
+    render_banner MainView.get_main_template.sub(/\{\{\ content }}/, content)
   end
 
 end

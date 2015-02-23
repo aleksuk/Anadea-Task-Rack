@@ -3,8 +3,13 @@ class Router
 
   @@routing = {}
 
-  def self.get_path path
-    path.length > 1 ? '/:name' : '/'
+  def self.get_settings path
+    parsed_path = /\/(\w+)?\/?(\w+)?/.match(path)
+    
+    {
+      'route' => "/#{parsed_path[1]}",
+      'name' => "#{parsed_path[2]}"
+    }
   end
 
   def self.get_name path
@@ -13,19 +18,17 @@ class Router
   end
 
   def self.set_route params
-    @@routing[params[:path]] = {
+    @@routing[params[:route]] = {
       :method => params[:method],
       :controller => params[:controller],
     }
   end
 
   def self.action params
-    
-    return '' if params[:path].index('favicon.ico') || params[:path].nil?
-    path = get_path params[:path]
-    name = get_name params[:path]
+    settings = get_settings params[:path]
+    route = @@routing[settings['route']]
 
-    @@routing[path][:controller].send(@@routing[path][:method], name: name)
+    route[:controller].send(route[:method], name: settings['name'], request: params[:request])
   end
 
 end
