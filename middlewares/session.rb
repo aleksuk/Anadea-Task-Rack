@@ -14,7 +14,8 @@ class Session < BaseServer
     token = request.cookies['token']
 
     Session.set_user @@session[token]
-
+    env['user_data'] = @@session[token]
+    
     case request.path
     when '/logout'
       logout response, token

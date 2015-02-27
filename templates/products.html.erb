@@ -1,0 +1,6 @@
+<% @products.each do |el| %>    
+    <div>
+        <a href="/product/<%= el.name %>"><%= el.name %></a>
+        <span>: <%= el.price %></span>
+    </div>
+<% end %>

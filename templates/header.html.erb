@@ -1,0 +1,12 @@
+<% if @current_user %>
+    <div> Hello <%= @current_user['name'] %>!!!
+        <a href="/logout">LogOut</a>
+    </div>
+<% else %>
+    <div> Input your name 
+        <form action="/login">
+            <input name="name" action="/authentication" />
+            <button type="submit"> Login </button>
+        </form>
+    </div>
+<% end %>
