@@ -1,3 +1,11 @@
 body {
     background: red;
 }
+
+form {
+    display: inline-block;
+}
+
+.product {
+    margin: 10px;
+}

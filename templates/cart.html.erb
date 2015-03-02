@@ -1,0 +1,33 @@
+<% @products.each do |el| %>    
+    <div class="product">
+        <a href="/product/<%= el.name %>"><%= el.name %></a>
+        <span>: <%= el.price %>$</span>
+        
+        <form method="POST" action="/clearCart/<%= el.name %>">
+            <button type="sumbit">
+                Remove
+            </button>
+        </form>
+    </div>
+<% end %>
+
+<div>Total price: <%= @total_price %>$</div>
+
+<a href="/"> Main </a>
+<br />
+
+<form method="POST" action="/clearCart">
+    <button type="sumbit">
+        Clear cart
+    </button>
+</form>
+
+<% if Session.current_user %>
+    <form method="POST" action="/order">
+        <button type="sumbit">
+            Buy
+        </button>
+    </form>
+<% else %>
+    <p>Enter your name for next steps!!</p>
+<% end %>

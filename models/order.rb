@@ -1,30 +1,38 @@
-class OrderModel
+class OrderModel < CartModel
 
-  def add product
+  attr_accessor :product, :date
+
+  @@orders = []
+
+  def initialize
+    @time = Time.now
+    @products = []
   end
 
-  def delete product
+  def add product
+    @products << product
+  end
+
+  def save
+    @@orders << self
   end
 
   def show_price
+    @products.reduce 0 do |sum, el|
+      sum += el.price
+    end
   end
 
-  def delete_all
-  end
-
-  def self.all
+  def self.delete product
+    #???
   end
 
   def self.delete_all
+    @@orders.clear
   end
 
-end
-
-class CartModel
-  def checkout
-    order = Order.new
-    #скопировать
-    #очистить
-    order.save
+  def self.all
+    @@orders
   end
+
 end

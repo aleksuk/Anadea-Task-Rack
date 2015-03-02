@@ -1,5 +1,3 @@
-require 'securerandom'
-
 class Session < BaseServer
 
   @@session = {}
@@ -10,7 +8,7 @@ class Session < BaseServer
 
   def call env
     request = Rack::Request.new(env)
-    response = [302, { 'Location' => '/' }, ['']]
+    response = [301, { 'Location' => '/' }, ['']]
     token = request.cookies['token']
 
     Session.set_user @@session[token]

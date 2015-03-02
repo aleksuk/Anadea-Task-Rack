@@ -1,6 +1,13 @@
 <% @products.each do |el| %>    
-    <div>
+    <div class="product">
         <a href="/product/<%= el.name %>"><%= el.name %></a>
-        <span>: <%= el.price %></span>
+        <span>: <%= el.price %>$</span>
+
+        <form method="POST" action="/cart">
+            <input name="name" value="<%= el.name %>" hidden="hidden" />
+            <button type="sumbit">
+                Add to cart
+            </button>
+        </form>
     </div>
 <% end %>

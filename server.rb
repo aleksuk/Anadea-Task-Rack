@@ -1,10 +1,15 @@
 class Shop < BaseServer
 
   def call env
-    params = get_request_parameters(env)
-    path = get_request_path env
+    req = Rack::Request.new(env)
+    result = Router.action(method: req.request_method, path: req.path, params: req.params, request: env)
 
-    [200, { 'Content-Type' => 'text/html' }, [Router.action(path: path, params: params, request: env)]]
+    if result.is_a?(Hash) && result[:__redirect]
+      [301, { 'Location' => result[:redirect_to] }, []]
+    else
+      [200, { 'Content-Type' => 'text/html' }, [result]]
+    end
+
   end
 
 end

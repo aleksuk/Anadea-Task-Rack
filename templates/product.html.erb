@@ -1,4 +1,10 @@
 <div>
-    <span><%= @product.name %>: <%= @product.price %> </span>
+    <span><%= @product.name %>: <%= @product.price %>$ </span>
+    <form method="POST" action="/cart">
+        <input name="name" value="<%= @product.name %>" hidden="hidden" />
+        <button type="sumbit">
+            Add to cart
+        </button>
+    </form>
     <a href="/">Back</a>
 </div>

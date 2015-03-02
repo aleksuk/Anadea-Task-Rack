@@ -1,14 +1,13 @@
-#I know, it's sucks, but I haven't time for searching beautiful solution
 class Router
 
-  @@routing = {}
+  @@routing = []
 
   def self.get_settings path
     parsed_path = /\/(\w+)?\/?(\w+)?/.match(path)
-    
+
     {
-      'route' => "/#{parsed_path[1]}",
-      'name' => "#{parsed_path[2]}"
+      :router_path => "/#{parsed_path[1]}",
+      :router_param => "#{parsed_path[2]}"
     }
   end
 
@@ -18,17 +17,20 @@ class Router
   end
 
   def self.set_route params
-    @@routing[params[:route]] = {
-      :method => params[:method],
-      :controller => params[:controller],
-    }
+    @@routing << params
   end
 
   def self.action params
     settings = get_settings params[:path]
-    route = @@routing[settings['route']]
+    route = find_route params, settings
 
-    route[:controller].send(route[:method], name: settings['name'], request: params[:request])
+    route[:controller].send(route[:action], params: params[:params].merge(settings), request: params[:request])
+  end
+
+  def self.find_route params, settings
+    @@routing.detect do |el|
+      el[:method] == params[:method] && el[:path] == settings[:router_path]
+    end
   end
 
 end
