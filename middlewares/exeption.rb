@@ -8,7 +8,7 @@ class Exeption < BaseServer
     begin
       @app.call env
     rescue
-      [500, { 'Content-Type' => 'text/html' }, [MainView.render_error]]
+      [500, { 'Content-Type' => 'text/html' }, [MainController.new(env).send(:error)]]
     end
   end
 

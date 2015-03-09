@@ -1,4 +1,4 @@
-class OrderModel < CartModel
+class Order
 
   attr_accessor :product, :date
 
@@ -23,7 +23,7 @@ class OrderModel < CartModel
     end
   end
 
-  def self.delete product
+  def delete product
     #???
   end
 

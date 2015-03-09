@@ -6,8 +6,8 @@ class Router
     parsed_path = /\/(\w+)?\/?(\w+)?/.match(path)
 
     {
-      :router_path => "/#{parsed_path[1]}",
-      :router_param => "#{parsed_path[2]}"
+      'router_path' => "/#{parsed_path[1]}",
+      'router_param' => "#{parsed_path[2]}"
     }
   end
 
@@ -24,12 +24,15 @@ class Router
     settings = get_settings params[:path]
     route = find_route params, settings
 
-    route[:controller].send(route[:action], params: params[:params].merge(settings), request: params[:request])
+    params[:env]['url_params'] = settings
+    params[:env]['action'] = route[:action]
+
+    route[:controller].new(params[:env]).call
   end
 
   def self.find_route params, settings
     @@routing.detect do |el|
-      el[:method] == params[:method] && el[:path] == settings[:router_path]
+      el[:method] == params[:method] && el[:path] == settings['router_path']
     end
   end
 

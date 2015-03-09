@@ -89,3 +89,4 @@ RSpec.configure do |config|
 end
 
 require_relative '../models/product'
+require_relative '../models/order'

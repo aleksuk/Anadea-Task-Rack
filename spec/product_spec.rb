@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe ProductModel do
+describe Product do
 
   before do
     described_class.class_eval do 

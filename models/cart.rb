@@ -1,4 +1,4 @@
-class CartModel
+class Cart
 
   @@cart = []
 
@@ -29,7 +29,7 @@ class CartModel
   end
 
   def self.checkout
-    order = OrderModel.new
+    order = Order.new
 
     @@cart.each do |el|
       order.add el

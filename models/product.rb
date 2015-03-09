@@ -1,4 +1,4 @@
-class ProductModel
+class Product
 
   @@products = []
 

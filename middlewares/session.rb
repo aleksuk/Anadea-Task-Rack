@@ -10,9 +10,8 @@ class Session < BaseServer
     request = Rack::Request.new(env)
     response = [301, { 'Location' => '/' }, ['']]
     token = request.cookies['token']
-
-    Session.set_user @@session[token]
-    env['user_data'] = @@session[token]
+    
+    env['session'] = @@session[token] || {}
     
     case request.path
     when '/logout'
@@ -49,17 +48,11 @@ class Session < BaseServer
 
   def login response, token, name
     set_cookie response, "token=#{token};path=/;"
-    @@session[token] = { 'name' => name }
+    @@session[token] = { 
+      'user' => { 'name' => name } 
+    }
 
     response
-  end
-
-  def self.current_user
-    @current_user
-  end
-
-  def self.set_user user
-    @current_user = user
   end
 
 end
