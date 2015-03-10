@@ -1,37 +1,39 @@
 class Cart
 
-  @@cart = []
-
-  def self.add product
-    @@cart << product
+  def initialize
+    @cart = []
   end
 
-  def self.delete product
-    el_index = @@cart.find_index do |el|
+  def add product
+    @cart << product
+  end
+
+  def delete product
+    el_index = @cart.find_index do |el|
       el.name == product
     end
     
-    @@cart.delete_at el_index
+    @cart.delete_at el_index
   end
 
-  def self.show_price
-    @@cart.reduce 0 do |sum, el|
+  def show_price
+    @cart.reduce 0 do |sum, el|
       sum += el.price
     end
   end
 
-  def self.all
-    @@cart
+  def all
+    @cart
   end
 
-  def self.delete_all
-    @@cart = []
+  def delete_all
+    @cart = []
   end
 
-  def self.checkout
+  def checkout
     order = Order.new
 
-    @@cart.each do |el|
+    @cart.each do |el|
       order.add el
     end
 

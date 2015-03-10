@@ -1,35 +1,41 @@
 class CartController < MainController
 
-  @@cart = []
-
   def add_to_cart
-    Cart.add Product.find(params['name'])
+    cart.add Product.find(params['name'])
 
     redirect_to @env['HTTP_REFERER'] || '/'
   end
 
   def index
-    @products = Cart.all
-    @total_price = Cart.show_price
+    @products = cart.all
+    @total_price = cart.show_price
   end
 
   def delete
     name = params['router_param']
 
     if name && name.size > 0
-      Cart.delete name
+      cart.delete name
     else
-      Cart.delete_all
+      cart.delete_all
     end
 
     redirect_to @env['HTTP_REFERER'] || '/'
   end
 
   def create_order
-    Cart.checkout
-    Cart.delete_all
+    cart.checkout
+    cart.delete_all
 
     redirect_to '/'
+  end
+
+  def cart
+    unless session['cart']
+      session['cart'] = Cart.new
+    end
+
+    session['cart']
   end
 
 end
